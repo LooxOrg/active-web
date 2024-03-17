@@ -6,9 +6,10 @@ import { handleApiRequest } from "./apiRequest";
 function handleRequest(server: ActiveServer, req: http.IncomingMessage, res: http.ServerResponse) {
   let url = req.url?.split("?")[0];
   if (url?.startsWith("/api") && server.enableAPI) {
+    url = url.slice(5);
     handleApiRequest(server, url, req, res);
   } else if (!url?.startsWith("/api") && server.enableAPI && !server.enableWeb) {
-    res.writeHead(200);
+    res.writeHead(403);
     res.end('<h1> Invalid Access </h1>');
   } else if(server.enableWeb) {
     handleStaticFileRequest(server, url, req, res);

@@ -7,10 +7,11 @@ function handleRequest(server, req, res) {
     var _a;
     let url = (_a = req.url) === null || _a === void 0 ? void 0 : _a.split("?")[0];
     if ((url === null || url === void 0 ? void 0 : url.startsWith("/api")) && server.enableAPI) {
+        url = url.slice(5);
         (0, apiRequest_1.handleApiRequest)(server, url, req, res);
     }
     else if (!(url === null || url === void 0 ? void 0 : url.startsWith("/api")) && server.enableAPI && !server.enableWeb) {
-        res.writeHead(200);
+        res.writeHead(403);
         res.end('<h1> Invalid Access </h1>');
     }
     else if (server.enableWeb) {

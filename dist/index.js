@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ServerSettings = exports.ActiveServer = void 0;
+exports.API = exports.ServerSettings = exports.ActiveServer = void 0;
 // Import the http module
 const fs_1 = require("fs");
 const http_1 = __importDefault(require("http"));
@@ -12,12 +12,16 @@ const log_1 = require("./src/log");
 const error_1 = require("./src/error");
 const utils_1 = require("./src/utils");
 const request_1 = require("./src/request");
+const ServerSettings_1 = __importDefault(require("./src/constructor/ServerSettings"));
+exports.ServerSettings = ServerSettings_1.default;
+const API_1 = __importDefault(require("./src/constructor/API"));
+exports.API = API_1.default;
 class ActiveServer {
     constructor(config) {
-        this.APIs = {};
         this.name = config.name;
         this.enableAPI = config.enableAPI;
         this.enableWeb = config.enableWeb;
+        this.APIs = {};
     }
     setPort(port) {
         this.port = port;
@@ -31,8 +35,13 @@ class ActiveServer {
             throw new Error("The provided directory path do not exist");
         }
     }
-    addAPIs(apis) {
-        this.APIs = apis;
+    addAPIs(api) {
+        if (!this.APIs[api.url]) {
+            this.APIs[api.url] = api;
+        }
+        else {
+            throw new Error(`API with url ${api.url} already exists`);
+        }
     }
     createServer() {
         this.WebServer = http_1.default.createServer((req, res) => {
@@ -57,11 +66,3 @@ class ActiveServer {
     }
 }
 exports.ActiveServer = ActiveServer;
-class ServerSettings {
-    constructor(name, enableWeb, enableAPI) {
-        this.name = name;
-        this.enableAPI = enableAPI;
-        this.enableWeb = enableWeb;
-    }
-}
-exports.ServerSettings = ServerSettings;

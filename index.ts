@@ -1,15 +1,13 @@
 // Import the http module
-import { existsSync, readFileSync } from 'fs';
-import http, { IncomingMessage, METHODS, ServerResponse } from 'http';
+import { existsSync } from 'fs';
+import http from 'http';
 import path from 'path';
-import colors from './color';
-import { fileAccessLog, serverLog } from './src/log';
-import { getContentType } from './src/content';
+import { serverLog } from './src/log';
 import { getServerErrorMessage } from './src/error';
-import { returnFileNotFound } from './src/requestReturns';
 import { canCreateServer } from './src/utils';
-import { handleStaticFileRequest } from './src/fileRequest';
 import { handleRequest } from './src/request';
+import ServerSettings from './src/constructor/ServerSettings';
+import API from './src/constructor/API';
 
 class ActiveServer {
   name: string;
@@ -18,7 +16,7 @@ class ActiveServer {
   webPath?: string;
   enableAPI: boolean;
   enableWeb: boolean;
-  APIs: Record<string, unknown> = {};
+  APIs: { [key: string]: API }; // Object with string keys and API values
   private WebServer?: http.Server;
   
   
@@ -27,6 +25,7 @@ class ActiveServer {
     this.name = config.name;
     this.enableAPI = config.enableAPI;
     this.enableWeb = config.enableWeb;
+    this.APIs = {};
   }
   
   setPort(port: number) {
@@ -42,8 +41,12 @@ class ActiveServer {
     }
   }
   
-  addAPIs(apis: Record<string, unknown>) {
-    this.APIs = apis;
+  addAPIs(api: API) {
+    if (!this.APIs[api.url]) {
+      this.APIs[api.url] = api;
+    } else {
+      throw new Error(`API with url ${api.url} already exists`);
+    }
   }
   
   private createServer() {
@@ -71,18 +74,7 @@ class ActiveServer {
   
 }
 
-class ServerSettings {
-  name: string;
-  enableAPI: boolean;
-  enableWeb: boolean;
-  constructor(name: string, enableWeb: boolean, enableAPI: boolean) {
-    this.name = name;
-    this.enableAPI = enableAPI;
-    this.enableWeb = enableWeb;
-  }
-}
-
-export {ActiveServer, ServerSettings};
 
 
+export {ActiveServer, ServerSettings, API};
 
