@@ -12,13 +12,13 @@ exports.serverLog = serverLog;
 function fileAccessLog(server, method, status, file) {
     let methodColor = getMethodColor(method);
     let statusColor = getStatusColor(status);
-    console.log(color_1.default.yellow + `[${server.name}-web]` + color_1.default.reset, methodColor + method, statusColor + status, file);
+    console.log(color_1.default.yellow + `[${server.name}-web]`, methodColor + method, statusColor + status, color_1.default.reset + file);
 }
 exports.fileAccessLog = fileAccessLog;
 function apiRequestLog(server, method, status, api) {
     let methodColor = getMethodColor(method);
     let statusColor = getStatusColor(status);
-    console.log(color_1.default.yellow + `[${server.name}-api]` + color_1.default.reset, methodColor + method, statusColor + status, api);
+    console.log(color_1.default.yellow + `[${server.name}-api]`, methodColor + method, statusColor + status, color_1.default.reset + api);
 }
 exports.apiRequestLog = apiRequestLog;
 function getMethodColor(method) {

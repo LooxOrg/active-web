@@ -8,13 +8,13 @@ function serverLog(server: ActiveServer, ...args: any[]) {
 function fileAccessLog(server: ActiveServer, method: string, status: number, file: string) {
   let methodColor = getMethodColor(method);
   let statusColor = getStatusColor(status);
-  console.log(colors.yellow + `[${server.name}-web]` + colors.reset, methodColor+method, statusColor+status, file);
+  console.log(colors.yellow + `[${server.name}-web]`, methodColor+method, statusColor+status, colors.reset+file);
 }
 
 function apiRequestLog(server: ActiveServer, method: string, status: number, api: string) {
   let methodColor = getMethodColor(method);
   let statusColor = getStatusColor(status);
-  console.log(colors.yellow + `[${server.name}-api]` + colors.reset, methodColor+method, statusColor+status, api);
+  console.log(colors.yellow + `[${server.name}-api]`, methodColor+method, statusColor+status, colors.reset+api);
 }
 
 function getMethodColor(method: string): string {

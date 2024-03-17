@@ -2,6 +2,7 @@ import http from "http";
 import { existsSync, readFileSync } from "fs";
 import { ActiveServer } from "..";
 import { returnFileNotFound } from "./requestReturns";
+import { serverLog } from "./log";
 
 function canCreateServer(server: ActiveServer): boolean {
   return (
@@ -31,4 +32,4 @@ function fileExists(server: ActiveServer, filePath: string, req: http.IncomingMe
   }
   return true;
 }
-export { canCreateServer, sendFile, respondWithError }
+export { canCreateServer, sendFile, respondWithError, fileExists }

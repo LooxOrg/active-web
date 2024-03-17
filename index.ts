@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'fs';
 import http, { IncomingMessage, METHODS, ServerResponse } from 'http';
 import path from 'path';
 import colors from './color';
-import { fileAccessLog } from './src/log';
+import { fileAccessLog, serverLog } from './src/log';
 import { getContentType } from './src/content';
 import { getServerErrorMessage } from './src/error';
 import { returnFileNotFound } from './src/requestReturns';
@@ -34,10 +34,11 @@ class ActiveServer {
   }
   
   setWebPath(webPath: string) {
-    if (existsSync(webPath)) {
+    if (existsSync(path.join(process.cwd(), webPath))) {
       this.webPath = webPath;
+      serverLog(this, `Web path set to ${webPath}`);
     } else {
-      throw new Error("The provided file path do not exist");
+      throw new Error("The provided directory path do not exist");
     }
   }
   

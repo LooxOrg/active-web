@@ -7,5 +7,5 @@ const path_1 = __importDefault(require("path"));
 const __1 = require("..");
 let AS = new __1.ActiveServer(new __1.ServerSettings("test", true, true));
 AS.setPort(3000);
-AS.setWebPath(path_1.default.join(__dirname, "..", "..", "app"));
+AS.setWebPath(path_1.default.join("app"));
 AS.init();
