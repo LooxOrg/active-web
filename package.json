@@ -1,6 +1,6 @@
 {
   "name": "active-web",
-  "version": "1.0.3",  
+  "version": "1.0.4",  
   "main": "dist/index.js",
   "scripts": {
     "start": "npx tsc && node ./dist/test/test.js",
@@ -12,6 +12,8 @@
   "devDependencies": {
     "@types/node": "^20.11.28",
     "typescript": "^5.4.2"
-  }
-}
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/looxorg"
+  }}
 
