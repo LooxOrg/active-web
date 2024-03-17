@@ -2,6 +2,7 @@
   "name": "active-web",
   "version": "1.1.0",
   "main": "dist/index.js",
+  
   "scripts": {
     "start": "npx tsc && node ./dist/test/test.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +10,10 @@
   "author": "LooxOrg",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "@types/node": "^20.11.28"
+  },
   "devDependencies": {
-    "@types/node": "^20.11.28",
     "typescript": "^5.4.2"
   }
 }
