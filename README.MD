@@ -13,7 +13,7 @@ npm i active-web
 
 ```ts
 import path from "path";
-import { API, ActiveServer, ServerSettings } from "..";
+import { API, ActiveServer, ServerSettings } from "active-web";
 
 let config = new ServerSettings(
   "test", // the name of the server
